@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -42,12 +43,22 @@ namespace App_Covid
             //solicitar lista de Paises ao webservice
             Solicitar_lista_Paises();
         }
-        private void Solicitar_lista_Paises()
+        private async Task Solicitar_lista_Paises()
         {
             // solicitar ListaPaises ao Webservice
             //Verificar Resposta
+            string enviar_string; ;
+            try
+            {
+                HttpClient Http = new HttpClient();
 
-            string enviar_string = "dados Json";
+                enviar_string = await Http.GetStringAsync("https://api.covid19api.com/countries");
+            }
+            catch(Exception ex)
+            {
+                enviar_string = "";
+            }
+
             DeserializeListaPaises(enviar_string); // Ponto 2
         }
 
@@ -69,12 +80,21 @@ namespace App_Covid
         //  2da Parte - Pesquisa de Dados
         //__________________________________________________________
 
-        public void AlguemCarregouEmPesquisar()
+        public async Task AlguemCarregouEmPesquisar()
         {
             // solicitar Lista de dados do Pais ao Webservice
             //Verificar Resposta
+            string enviar_string; ;
+            try
+            {
+                HttpClient Http = new HttpClient();
 
-            string enviar_string = "dados Json";
+                enviar_string = await Http.GetStringAsync("link");
+            }
+            catch (Exception ex)
+            {
+                enviar_string = "";
+            }
             DeserializeListaDadosPaises(enviar_string); // Ponto 7
 
         }

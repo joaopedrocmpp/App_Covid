@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using App_Covid.Objetos;
+using Newtonsoft.Json;
 
 namespace App_Covid
 {
@@ -28,8 +29,17 @@ namespace App_Covid
         // ponto 3
         public void DeserializeListaPaises(string jsonString)
         {
-            /*Faz trabalho de s«deserialização*/
-            /* ListaPaises=deserialização*/
+            //Converte para lista do objecto Pais
+            var res = JsonConvert.DeserializeObject<List<Pais>>(jsonString);
+
+            listaPaises = new List<string>();
+            
+            // Retira nome do pais para a lista de paises
+            foreach(Pais p in res)
+            {
+                listaPaises.Add(p.Country);
+            }
+
             NotificaListaPaisesPronta(this, new EventArgs());  // ponto 4 - Notifica a View
         }
 
@@ -45,8 +55,6 @@ namespace App_Covid
         // ponto 9
         public void DeserializeListaDadosPais(string jsonString)
         {
-            /*Faz trabalho de s«deserialização*/
-            /* ListadadosPaises=deserialização*/
             NotificaCalculosDadosPais(this, new EventArgs()); // Ponto 10
         }
 
